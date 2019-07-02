@@ -74,9 +74,9 @@ class RFull < Formula
 
     ## SRF - Add Cairo support
     if build.with? "cairo-x11"
-      args << "--with-cairo"
+      args << "--with-cairo-x11"
     else
-      args << "--without-cairo"
+      args << "--without-cairo-x11"
     end
 
     # Help CRAN packages find gettext and readline
