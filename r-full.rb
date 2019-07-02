@@ -1,4 +1,4 @@
-class R < Formula
+class R_Full < Formula
   desc "Software environment for statistical computing"
   homepage "https://www.r-project.org/"
   url "https://cran.r-project.org/src/base/R-3/R-3.6.0.tar.gz"
@@ -19,7 +19,7 @@ class R < Formula
   depends_on :x11 # SRF - X11 necessary for tcl-tk since tk.h includes X11 headers. See section A.2.1 Tcl/Tk at < https://cran.r-project.org/doc/manuals/r-release/R-admin.html >
   depends_on "texinfo" => :optional
   depends_on "libtiff" => :optional
-  depends_on "cairo" => :optional # SRF - Cairo must be build with with X11 support. Use brew install sethrfore/r-srf/cairo
+  depends_on "cairo-x11" => :optional # SRF - Cairo must be build with with X11 support. Use brew install sethrfore/r-srf/cairo-x11
   depends_on "icu4c" => :optional
   depends_on "pango" => :optional
 
@@ -52,8 +52,10 @@ class R < Formula
       "--enable-R-shlib",
       "SED=/usr/bin/sed", # don't remember Homebrew's sed shim
       "--with-tcltk", # SRF - Add tcl-tk support.
-      "--with-tcl-config=/System/Library/Frameworks/Tcl.framework/tclConfig.sh", # SRF - Point to system tcl config file (requires Command Line tools to be installed).
-      "--with-tk-config=/System/Library/Frameworks/Tk.framework/tkConfig.sh" # SRF - Point to system tk config file (requires Command Line tools to be installed).
+      # "--with-tcl-config=/System/Library/Frameworks/Tcl.framework/tclConfig.sh", # SRF - Point to system tcl config file (requires Command Line tools to be installed).
+      # "--with-tk-config=/System/Library/Frameworks/Tk.framework/tkConfig.sh" # SRF - Point to system tk config file (requires Command Line tools to be installed).
+      "--with-tcl-config=/usr/local/lib/tclConfig.sh", # JPW - Point to system tcl config file linked to /usr/local/lib (to avoid System Integrity Protection issues)
+      "--with-tk-config=/usr/local/lib/tkConfig.sh" # JPW - Point to system tk config file linked to /usr/local/lib (to avoid System Integrity Protection issues)
     ]
 
     if build.with? "openblas"
@@ -71,7 +73,7 @@ class R < Formula
     end
 
     ## SRF - Add Cairo support
-    if build.with? "cairo"
+    if build.with? "cairo-x11"
       args << "--with-cairo"
     else
       args << "--without-cairo"
