@@ -1,4 +1,4 @@
-class RFull < Formula
+class R < Formula
   desc "Software environment for statistical computing"
   homepage "https://www.r-project.org/"
   url "https://cran.r-project.org/src/base/R-3/R-3.6.0.tar.gz"
@@ -19,7 +19,7 @@ class RFull < Formula
   depends_on :x11 # SRF - X11 necessary for tcl-tk since tk.h includes X11 headers. See section A.2.1 Tcl/Tk at < https://cran.r-project.org/doc/manuals/r-release/R-admin.html >
   depends_on "texinfo" => :optional
   depends_on "libtiff" => :optional
-  depends_on "cairo-x11" => :optional # SRF - Cairo must be build with with X11 support. Use brew install sethrfore/r-srf/cairo-x11
+  depends_on "cairo" => :optional # SRF - Cairo must be build with with X11 support. Use brew install sethrfore/r-srf/cairo
   depends_on "icu4c" => :optional
   depends_on "pango" => :optional
 
@@ -73,10 +73,10 @@ class RFull < Formula
     end
 
     ## SRF - Add Cairo support
-    if build.with? "cairo-x11"
-      args << "--with-cairo-x11"
+    if build.with? "cairo"
+      args << "--with-cairo"
     else
-      args << "--without-cairo-x11"
+      args << "--without-cairo"
     end
 
     # Help CRAN packages find gettext and readline
