@@ -20,7 +20,7 @@ class CairoX11 < Formula
 
   depends_on "pkg-config" => :build
   depends_on :x11
-  depends on "fontconfig"
+  depends_on "fontconfig"
   depends_on "freetype"
   depends_on "glib"
   depends_on "libpng"
