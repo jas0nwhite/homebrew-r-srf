@@ -19,9 +19,12 @@ class R < Formula
   depends_on :x11 # SRF - X11 necessary for tcl-tk since tk.h includes X11 headers. See section A.2.1 Tcl/Tk at < https://cran.r-project.org/doc/manuals/r-release/R-admin.html >
   depends_on "texinfo" => :optional
   depends_on "libtiff" => :optional
-  depends_on "sethrfore/r-srf/cairo" => :optional # SRF - Cairo must be build with with X11 support. Use brew install sethrfore/r-srf/cairo
+  depends_on "jas0nwhite/homebrew-r-srf/cairo" => :optional # JPW - Cairo must be build with with X11 support. Use brew install jas0nwhite/homebrew-r-srf/cairo
   depends_on "icu4c" => :optional
-  # depends_on "pango" => :optional
+  depends_on "pango" => :optional
+
+  ## JPW - Add homebrew's tcl-tk
+  depends_on "tcl-tk" => :optional
 
   # needed to preserve executable permissions on files without shebangs
   skip_clean "lib/R/bin"
@@ -52,10 +55,8 @@ class R < Formula
       "--enable-R-shlib",
       "SED=/usr/bin/sed", # don't remember Homebrew's sed shim
       "--with-tcltk", # SRF - Add tcl-tk support.
-      # "--with-tcl-config=/System/Library/Frameworks/Tcl.framework/tclConfig.sh", # SRF - Point to system tcl config file (requires Command Line tools to be installed).
-      # "--with-tk-config=/System/Library/Frameworks/Tk.framework/tkConfig.sh" # SRF - Point to system tk config file (requires Command Line tools to be installed).
-      "--with-tcl-config=/usr/local/lib/tclConfig.sh", # JPW - Point to system tcl config file linked to /usr/local/lib (to avoid System Integrity Protection issues)
-      "--with-tk-config=/usr/local/lib/tkConfig.sh" # JPW - Point to system tk config file linked to /usr/local/lib (to avoid System Integrity Protection issues)
+      "--with-tcl-config=/usr/local/opt/tcl-tk/lib/tclConfig.sh", # JPW - Point to homebrew tcl config file
+      "--with-tk-config=/usr/local/opt/tcl-tk/lib/tkConfig.sh", # JPW - Point to homebrew tk config file
     ]
 
     if build.with? "openblas"
